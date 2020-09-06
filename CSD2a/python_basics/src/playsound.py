@@ -6,16 +6,19 @@ def samplespeler(hoeveelheid, sample):
     if hoeveelheid > 0:
         if sample == 'WAP':
             wave_obj = sa.WaveObject.from_wave_file('../media/WAP.wav')
+            play_obj = wave_obj.play()
             play_obj.wait_done()
             hoeveelheid -= 1
             samplespeler(hoeveelheid, sample)
         elif sample == 'RAP':
             wave_obj = sa.WaveObject.from_wave_file('./media/RAP.wav')
+            play_obj = wave_obj.play()
             play_obj.wait_done()
             hoeveelheid -= 1
             samplespeler(hoeveelheid, sample)
         elif sample == 'FAP':
             wave_obj = sa.WaveObject.from_wave_file('../media/FAP.wav')
+            play_obj = wave_obj.play()
             play_obj.wait_done()
             hoeveelheid -= 1
             samplespeler(hoeveelheid, sample)
