@@ -1,3 +1,5 @@
+#This script should work, but I haven't gotten simpleaudio to work.
+
 import simpleaudio as sa
 
 def samplespeler(hoeveelheid, sample):
@@ -21,8 +23,6 @@ def samplespeler(hoeveelheid, sample):
             print('Uw gekozen sample bestaat hier niet')
     else:
         print('Hopelijk heeft U genoten')
-
-
 
 print ('Welke sample wilt u spelen? (Kies uit WAP, RAP en FAP)')
 sample = input()
