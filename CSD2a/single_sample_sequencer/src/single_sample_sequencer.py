@@ -6,6 +6,15 @@ import json
 import time
 proj_folder = pathlib.Path(f'{os.getcwd()}\{__file__}').parent.parent
 
+#Script to clear screen
+def screen_clear():
+   # for mac and linux(here, os.name is 'posix')
+   if os.name == 'posix':
+      _ = os.system('clear')
+   else:
+      # for windows platfrom
+      _ = os.system('cls')
+
 #Locate json sequencer data and loads it
 json_loc = str(f'{proj_folder}\config\sequencerdata.json')
 json_file = open(json_loc, 'r')
@@ -26,10 +35,14 @@ sampledict = {
 
 
 #Get all information from the user
+screen_clear()
+
 def beatinput():
     beats = int(input('How many beats are there in a measure? (choose from 3, 4 or 5) '))
     if beats == 3 or beats == 4 or beats == 5:
+        screen_clear()
         measures = int(input('How many measures do you want to play?'))
+        screen_clear()
         bpm = int(input('What will your BPM be? (maximum is 250BPM) '))
         if bpm <= 250:
             beatconverter(beats, measures, bpm)
@@ -49,6 +62,7 @@ def beatconverter(beats, measures, bpm):
 #Plays samples according to given input
 def sequencer(seqloc, waittime, beats, measures, counter):
     if seqloc[0] <= measures:
+        screen_clear()
         print(seqloc)
         note = seq_data[str(beats)][counter]
         if note == 'k' or note == 's' or note == 'h' or note == 'x':
