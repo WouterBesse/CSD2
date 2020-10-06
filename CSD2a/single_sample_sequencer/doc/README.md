@@ -1,4 +1,6 @@
-### **Here is my simple sequencer.**
+**THIS IS AN OLD PROJECT WHICH CONTAINS A BUG THAT SAVES SOME NOTES MULTIPLE TIMES, v2.0 IS IN THE EINDOPDRACHT FOLDER**
+
+###**Here is my simple sequencer.**
 
 It will play synthesizer notes and drums sequences according to the data in sequencerdata.json. <br>
 _~~The program also saves the played sequence as a midi file~~_ **this is currently broken**
@@ -20,8 +22,7 @@ Version `PyAudio-0.2.11-cp38-cp38-win_amd64` worked for my 64 bit windows system
 Once you've downloaded this you can just do `pip3 install PyAudio-0.2.11-cp38-cp38-win_amd64` in the folder where you downloaded the file.
 
 After this you you should just be able to install the rest of the used libraries without any problem with the `pip3 install` command.
-
-<br><br>
+<br><br><br>
 #### **Used libraries**
 
 json <br>

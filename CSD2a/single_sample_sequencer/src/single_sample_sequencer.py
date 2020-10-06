@@ -35,6 +35,7 @@ synth = Synthesizer(osc1_waveform=Waveform.triangle, osc1_volume=0.2, osc2_freq_
 degrees = []  # MIDI note number for drums
 degreesn = [] #MIDI note number for notes
 track = 0
+trackn = 1
 channel = 0
 time = [0]  # In beats
 timen = [0]
@@ -144,7 +145,7 @@ def beatinput():
         beatinput()
 
 
-# Builds a sequencer location array, convert bpm to milliseconds
+# Builds a sequencer location array, convert bpm to milliseconds, also starts the sequencer and threading
 def beat_converter(bpm):
     global wait_time, beats, measures
     wait_time = (60000 / bpm / 8) * 0.001
@@ -156,6 +157,7 @@ def beat_converter(bpm):
     thread2.start()
     thread1.join()
     thread2.join()
+    save_to_midi()
 
 
 # Plays drum samples according to given input
@@ -201,8 +203,7 @@ def nsequencer(threadName):
         if note != 'x':
             player.play_wave(synth.generate_constant_wave(str(note.capitalize()), wait_time))
             midinoteraw = midi_conv.get(note[:-1].lower())
-            print(note[:-1])
-            print(midinoteraw)
+            # print(midinoteraw)
             tijd.sleep(wait_time)
             if note[:-1].isdigit():
                 midinote = int(midinoteraw) + (note[-1] * 12)
@@ -214,13 +215,13 @@ def nsequencer(threadName):
             notelist.append(note.lower())
             tijd.sleep(wait_time)
         synth_ready = 1
-        print(drum_ready)
+        # print(drum_ready)
         while drum_ready == 0 or synth_ready == 0:
             tijd.sleep(0.001)
     synth_ready = 1
     print(notelist)
     if drum_ready == 1 and synth_ready == 1:
-        save_to_midi()
+        return()
 
 
 
@@ -245,7 +246,7 @@ def counter_update(seqloc):
 
 # Script which converts all the played notes to midi data and saves this as a .mid file
 def save_to_midi():
-    global degrees, track, channel, time, duration, tempo, volume, degreesn, timen
+    global degrees, track, channel, time, duration, tempo, volume, degreesn, timen, trackn
     for i in range(len(drumlist)):
         # Adds an extra duration to the end of the previous note to make a rest
         if drumlist[i] == 'x':
@@ -263,21 +264,27 @@ def save_to_midi():
             degreesn.append(notelist[i])
             timen.append(0)
 
+    print(degrees)
     # Midi export starts here
-    MyMIDI = MIDIFile(1)
+    MyMIDI = MIDIFile(2)
     MyMIDI.addTempo(1, 0, tempo)
     tim = -1
     timn = -1
     for i, pitch in enumerate(degrees):
         tim += time[i] + 1
-        print(pitch)
-        MyMIDI.addNote(1, channel, pitch, tim, duration, volume)
+        MyMIDI.addNote(0, channel, pitch, tim, duration, volume)
 
-    for i, pitch in enumerate(degreesn):
+    print(timen)
+    print(degreesn)
+    for i, pitchn in enumerate(degreesn):
         timn += timen[i] + 1
-        MyMIDI.addNote(2, channel, pitch, timn, duration, volume)
+        print(pitchn)
+        print(i)
+        print(timn)
+        print(timen[i])
+        MyMIDI.addNote(1, channel, pitchn, timn, duration, volume)
 
-    with open("Sequence.mid", "wb") as output_file:
+    with open("CSD2a/single_sample_sequencer/media/Sequence.mid", "wb") as output_file:
         MyMIDI.writeFile(output_file)
 
     print('\n Have a nice day, your midi file has been saved :)')
