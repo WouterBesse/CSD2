@@ -1,9 +1,9 @@
 **THIS IS AN OLD PROJECT WHICH CONTAINS A BUG THAT SAVES SOME NOTES MULTIPLE TIMES, v2.0 IS IN THE EINDOPDRACHT FOLDER**
 
-###**Here is my simple sequencer.**
+#**Wouter's pythonic sample sequencer v1.0**
 
-It will play synthesizer notes and drums sequences according to the data in sequencerdata.json. <br>
-_~~The program also saves the played sequence as a midi file~~_ **this is currently broken**
+This sequencer will play synthesizer notes and drums sequences according to the data in sequencerdata.json. <br>
+The program also saves the played sequence as a midi file
 
 If you just want to test out the sequencer, just commence single_sample_sequencer.py
 
@@ -11,7 +11,7 @@ You can also modify the sequence data that the sequencer plays.
 You can just open my simple sequencer_config.py script (it needs some new guiding text atm but works just fine)
 <br><br><br>
 
-#### **Installing the pyaudio libraries**
+## **Installing the pyaudio libraries**
 
 To get the synth to work I use the synthesizer libraries, which rely on the pyaudio library. I had a lot of trouble installing this, so here is a small guide on how I got this working.
 
@@ -23,7 +23,7 @@ Once you've downloaded this you can just do `pip3 install PyAudio-0.2.11-cp38-cp
 
 After this you you should just be able to install the rest of the used libraries without any problem with the `pip3 install` command.
 <br><br><br>
-#### **Used libraries**
+## **Used libraries**
 
 json <br>
 os <br>
