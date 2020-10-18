@@ -200,9 +200,9 @@ def play_sound(threadName):
         # Writes the time that has elapsed since starting the sequencer
         elapsed_time = int(round(time.time() * 1000)) - base_time
         # Keeps track of the count
-        counter = seqloc[0] * seqloc[1] * seqloc[2]
+        counter = ((seqloc[0] - 1) * 16) + ((seqloc[1] - 1) * 4) + seqloc[2]
         # Which note in the sequence to play
-        note_to_play = seqloc[1] * seqloc[2] - 1
+        note_to_play = ((seqloc[1] - 1) * 4) + seqloc[2] - 1
         # Check if a beat needs to be played, multiplies the wait_time by 1000 to make it whole milliseconds
         if elapsed_time / (int(wait_time * 1000)*2) >= counter:
             # Write out beat number
