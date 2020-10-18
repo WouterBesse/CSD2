@@ -223,4 +223,4 @@ beat_input()
 
 
 
-# python3 csd2a/eindopdracht/src/sample_sequencer_v20.py
+# python3 csd2a/eindopdracht/src/sequencer.py
