@@ -1,17 +1,44 @@
+# Setup for windows compatability
+import pathlib
+import os
+import json
+import random
+
+proj_folder = pathlib.Path(__file__).parent.parent
+
+
+# Script to clear screen
+def screen_clear():
+    # for mac and linux(here, os.name is 'posix')
+    if os.name == 'posix':
+        _ = os.system('clear')
+    else:
+        # for windows platfrom
+        _ = os.system('cls')
+
+
 # Locate json sequencer data and loads it
 json_loc = str(f'{proj_folder}\config\sequencerdata.json')
 json_file = open(json_loc, 'r')
-json_pure = str(json_file.read(1000))
+json_pure = str(json_file.read(100000))
 seq_data = json.loads(json_pure)
 
 # Arrays and functions to check if the notes are legal
 def drum_legality(beatsort, counter, inputtext):
-    drum_legal = ['k', 's', 'h', 'x', '<-', '']
+    drum_legal = ['k', 's', 'h', 'xk', 'xh', 'xs', 'x', '<-', '']
     if inputtext in drum_legal:
-        return
+        if inputtext == 'k':
+            beatsort = f'{beatsort}k'
+        elif inputtext == 's':
+            beatsort = f'{beatsort}sn'
+        elif inputtext == 'h':
+            beatsort = f'{beatsort}h'
+        else:
+            return
     else:
         screen_clear()
         print('Illegale drum input')
+        input("Press Enter to continue...")
         seq_builder(beatsort, counter)
 
 
@@ -27,38 +54,112 @@ def synth_legality(beatsort, counter, inputtext):
             else:
                 screen_clear()
                 print('Illegale synth input')
+                input("Druk op Enter om door te gaan...")
                 seq_builder(beatsort, counter)
         else:
             screen_clear()
             print('Illegale synth input')
+            input("Druk op Enter om door te gaan...")
             seq_builder(beatsort, counter)
 
 # Script to build sequence
 def seq_builder(beatsort, counter):
     screen_clear()
-    print(seq_data[str(beatsort)])
-    if counter < len(seq_data[str(beatsort)]):
-        if beatsort.endswith('s'):
-            note = input(f'Voer de noot in van stap nummer {counter + 1}, format = Noot-Kruis-Octaaf, bijvoorbeeld G#5, b2, f8. X betekent een rust. Of type <- om terug te gaan \n')
-            synth_legality(beatsort, counter, note)
+    pointer_list = []
+    n = 0
+    while n < (int(beatsort) * 4):
+        if n == counter:
+            pointer_list.append('^')
         else:
-            note = input(f'Voer de waarde in van noot nummer {counter + 1} kies uit (k(ick), s(nare), h(i-hat) of x (leeg), of type <- om terug te gaan \n')
-            drum_legality(beatsort, counter, note)
+            pointer_list.append(' ')
+        n += 1
+    print('Synth')
+    print(seq_data[f'{beatsort}s'])
+    print('Drums')
+    print(seq_data[f'{beatsort}h'])
+    print(seq_data[f'{beatsort}sn'])
+    print(seq_data[f'{beatsort}k'])
+    color_blue = '\033[34;1m'
+    pointer_list_str = str(pointer_list)
+    n = 0
+    while n < len(pointer_list_str):
+        if pointer_list_str[n] == "'" or pointer_list_str[n] == "[" or pointer_list_str[n] == "]" or pointer_list_str[n] == ",":
+            pointer_list_str = pointer_list_str[:n] + ' ' + pointer_list_str[n+1:]
+        n += 1
+    print(f'{color_blue}{pointer_list_str}')
+    note = input(f'\033[0;37mVoer de noot in van stap nummer {counter + 1}, typ help om de mogelijkheden te zien! \n')
+    if note == 'help':
+        screen_clear()
+        print('In deze configurator pas je de tracks aan van de snare, hi-hat, kick en synthesizer. \nHierbij de legenda:\nSnare: s, snare rust = xs\nKick: k, kick rust is xk\nHi-hat: h, hi-hat rust = xh\nSynth noot: (nootnaam)(kruis of géén kruis)(octaaf nummer). Bijvoorbeeld g3, a#5, D2. Mollen zijn hier niet van toepassing. Synth rust = x\nJe kunt zien bij welke stap je bent in de message. \nOm terug te gaan in de sequence kun je "<-" invoeren, om naar de volgende stap te gaan is een enter voldoende, als je klaar bent mag je done typen.\n')
+        input("Druk op Enter om door te gaan...")
+        seq_builder(beatsort, counter)
+    elif note == 'done':
+        with open(json_loc, 'w') as f:
+            json.dump(seq_data, f)
+        return
+    else:
         if note != '<-':
             if note != '':
-                seq_data[str(beatsort)][counter] = note
-                counter += 1
-                seq_builder(beatsort, counter)
+                if note[0] == 'x':
+                    if note[-1] == 's':
+                        seq_data[str(f'{beatsort}sn')][counter] = 'x'
+                        seq_builder(beatsort, counter)
+                    elif note[-1] == 'x':
+                        seq_data[str(f'{beatsort}s')][counter] = 'x'
+                        seq_builder(beatsort, counter)
+                    elif note[-1] == 'k':
+                        seq_data[str(f'{beatsort}k')][counter] = 'x'
+                        seq_builder(beatsort, counter)
+                    elif note[-1] == 'h':
+                        seq_data[str(f'{beatsort}h')][counter] = 'x'
+                        seq_builder(beatsort, counter)
+                elif note == 's':
+                    drum_legality(beatsort, counter, note)
+                    seq_data[str(f'{beatsort}sn')][counter] = note
+                    seq_builder(beatsort, counter)
+                elif note[-1].isdigit():
+                    synth_legality(beatsort, counter, note)
+                    seq_data[str(f'{beatsort}s')][counter] = note
+                    seq_builder(beatsort, counter)
+                else:
+                    drum_legality(beatsort, counter, note)
+                    seq_data[str(f'{beatsort}{note}')][counter] = note
+                    seq_builder(beatsort, counter)
             else:
-                seq_data[str(beatsort)][counter] = seq_data[str(beatsort)][counter]
-                counter += 1
-                seq_builder(beatsort, counter)
+                if int(counter) + 1 < 4 * int(beatsort):
+                    counter += 1
+                    seq_builder(beatsort, counter)
+                else:
+                    counter = 0
+                    seq_builder(beatsort, counter)
         else:
             counter -= 1
             seq_builder(beatsort, counter)
-    else:
-        with open(json_loc, 'w') as f:
-            json.dump(seq_data, f)
+
+
+def euclidian_generator(beatsort):
+    screen_clear()
+    generator_list = ['k', 's', 'h']
+    for i in generator_list:
+        n = 1
+        if i == 's':
+            i = 'sn'
+        euclid_counter = 1
+        ran_val = random.randint(1, ((2 * int(beatsort))-1))
+        while n <= (int(beatsort) * 4):
+            if n == euclid_counter or n == 1:
+                seq_data[str(f'{beatsort}{i}')][n-1] = i[0]
+                euclid_counter += ran_val
+            else:
+                seq_data[str(f'{beatsort}{i}')][n-1] = 'x'
+            n += 1
+    print('Jouw gegenereerde beat:')
+    print(seq_data[f'{beatsort}h'])
+    print(seq_data[f'{beatsort}sn'])
+    print(seq_data[f'{beatsort}k'])
+    with open(json_loc, 'w') as f:
+        json.dump(seq_data, f)
+    input("Druk op Enter om door te gaan...")
 
 
 # Script user input and initialisation
@@ -69,33 +170,29 @@ def beat_edit_init():
     if beatsort.isdigit():
         if beatsort == '3' or beatsort == '4' or beatsort == '5':
             screen_clear()
-            sound_type = input('Wil je drums aanpassen of de synth noten? Kies uit drums of synth \n')
-            if sound_type.isalpha():
-                if sound_type.lower() == 'drums' or sound_type.lower() == 'synth':
-                    if sound_type.lower() == 'synth':
-                        beatsort = f'{beatsort}s'
-                    screen_clear()
-                    generator = input('Wil je de noten met een euclidisch algoritme genereren of handmatig aanpassen? Kies uit genereren of handmatig \n')
-                    if generator.isalpha():
-                        if generator == 'handmatig':
-                            seq_builder(beatsort, counter)
-                        elif generator == 'genereren':
-                            seq_builder(beatsort, counter)
-                        else:
-                            screen_clear()
-                            print('Verkeerde input methode \n')
-                            beat_edit_init()
+            generator = input('Wil je de noten met een euclidisch algoritme genereren of handmatig aanpassen? Kies uit genereren of handmatig \n')
+            if generator.isalpha():
+                if generator == 'handmatig':
+                    seq_builder(beatsort, counter)
+                elif generator == 'genereren':
+                    euclidian_generator(beatsort)
                 else:
                     screen_clear()
-                    print('Verkeerd instrument \n')
+                    print('Verkeerde input methode \n')
+                    input("Druk op Enter om door te gaan...")
                     beat_edit_init()
             else:
                 screen_clear()
-                print('Verkeerde input, geen tekst \n')
+                print('Verkeerde input')
+                input("Druk op Enter om door te gaan...")
                 beat_edit_init()
+        else:
+            screen_clear()
+            print('Verkeerde maatsoort')
+            input("Druk op Enter om door te gaan...")
+            beat_edit_init()
     else:
         screen_clear()
-        print('Verkeerde maatsoort')
+        print('Verkeerde input')
+        input("Druk op Enter om door te gaan...")
         beat_edit_init()
-
-beat_edit_init()
