@@ -5,9 +5,7 @@ This is a sequencer that plays notes according to sequencerdata.json<br>
 
 If you just want to test out the sequencer, just commence `src/sample_sequencer_v20.py`
 
-You can also modify the sequence data that the sequencer plays.<br>
-You can just open my simple `src/sequencer_config.py` script _(it needs some new guiding text atm but works just fine)_.<br>
-In the future this can also generate your music according to an algorithm.
+You can also modify the sequence data that the sequencer plays, or generate an Euclidian rhythm<br>
 
 The program also saves the played music as a midi file, which is neat :)
 <br><br><br>
