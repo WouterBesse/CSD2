@@ -18,10 +18,16 @@ def screen_clear():
 
 
 # Locate json sequencer data and loads it
-json_loc = str(f'{proj_folder}\config\sequencerdata.json')
-json_file = open(json_loc, 'r')
-json_pure = str(json_file.read(100000))
-seq_data = json.loads(json_pure)
+json_loc = ''
+json_file = ''
+json_pure = ''
+seq_data = ''
+def json_locator():
+    global json_loc, json_file, json_pure, seq_data
+    json_loc = str(f'{proj_folder}\config\sequencerdata.json')
+    json_file = open(json_loc, 'r')
+    json_pure = str(json_file.read(100000))
+    seq_data = json.loads(json_pure)
 
 # Arrays and functions to check if the notes are legal
 def drum_legality(beatsort, counter, inputtext):
@@ -173,8 +179,10 @@ def beat_edit_init():
             generator = input('Wil je de noten met een euclidisch algoritme genereren of handmatig aanpassen? Kies uit genereren of handmatig \n')
             if generator.isalpha():
                 if generator == 'handmatig':
+                    json_locator()
                     seq_builder(beatsort, counter)
                 elif generator == 'genereren':
+                    json_locator()
                     euclidian_generator(beatsort)
                 else:
                     screen_clear()

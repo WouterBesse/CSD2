@@ -34,7 +34,7 @@ def keuze_menu():
     screen_clear()
     if keuze.isalpha():
         if keuze == 'spelen':
-            sequencer.beat_input()
+            sequencer.sequencer_init()
             keuze_menu()
         elif keuze == 'schrijven':
             sequencer_config.beat_edit_init()
