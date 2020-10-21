@@ -1,11 +1,12 @@
-#**Wouter's pythonic sample sequencer v2.0**
+# **Wouter's pythonic sample sequencer v2.0**
 
 This is a sequencer that plays notes according to sequencerdata.json<br>
 
 
 If you just want to test out the sequencer, just commence `src/sample_sequencer_v20.py`
 
-You can also modify the sequence data that the sequencer plays, or generate an Euclidian rhythm<br>
+You can choose to play the currently saved sequence or generate a new one with an Euclidean algorithm.<br>
+It's also possible to manually edit the sequence with my neat editor.
 
 The program also saves the played music as a midi file, which is neat :)
 <br><br><br>
