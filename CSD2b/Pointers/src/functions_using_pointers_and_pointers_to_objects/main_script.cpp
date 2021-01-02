@@ -1,11 +1,13 @@
 #include <iostream>
+#include <cstdlib>
 #include "pointerclass.h"
 
 
 main() {
   PC PointerClass;
-
     // Opdracht Pointer B
+    std::cout << "~~~~~~~~~~~~~~~~ Assignment B ~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << " " << std::endl;
     int nummer = 21;
     int* nummerpointer;
     nummerpointer = &nummer;
@@ -39,7 +41,13 @@ main() {
     std::cout << &nummerref ;
     std::cout << "', reference seems to operate on the same location" << std::endl;
 
-    // Opdracht Pointer C
+    // Opdracht Pointer C en D
+  std::cout << " " << std::endl;
+  std::cout << " " << std::endl;
+  std::cout << " " << std::endl;
+  std::cout << "~~~~~~~~~~~~~~~~ Assignment C and D ~~~~~~~~~~~~~~~~" << std::endl;
+  std::cout << " " << std::endl;
+  std::cout << "Starting to set values and create objects" << std::endl;
   PC PointerClass1;
   PC PointerClass2;
   PC PointerClass3;
@@ -50,6 +58,26 @@ main() {
   PointerClassPointer = &PointerClass3;
   PointerClassPointer->setter(5);
   PointerClassPointer->getter();
+  PC *ptray=new PC[50];
+
+  for (int i =0; i < 50; i++) {
+    int rndm;
+    rndm = rand() % 100;
+    ptray[i].setter(rndm);
+    std::cout << "Set value of object ";
+    std::cout << i;
+    std::cout << " to: ";
+    std::cout << rndm << std::endl;
+  }
+  std::cout << "Finished setting values and creating objects" << std::endl;
+  std::cout << "Getting all values from objects" << std::endl;
+  for (int i =0; i < 50; i++) {
+    std::cout << "The value of object ";
+    std::cout << i;
+    std::cout << " is: ";
+    std::cout << ptray[i].getter() << std::endl;
+  }
+  delete[] ptray;
 
 
 }
