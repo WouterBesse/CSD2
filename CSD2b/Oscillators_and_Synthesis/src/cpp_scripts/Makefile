@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Ic:/Program\ Files/JACK2/include -Wall -std=c++1z
 LDFLAGS= -Lc:/Program\ Files/JACK2/lib32 -llibjack
-SOURCE= sine.o oscillator.o main.o jack_module.o sqr.o
+SOURCE= sine.o oscillator.o main.o jack_module.o sqr.o tri.o generator.cpp
 HEADERS:= $(wildcard ./*.h)
 
 example: $(SOURCE) $(HEADERS)

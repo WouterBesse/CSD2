@@ -3,8 +3,7 @@
 #include <thread>
 #include "../headers/sine.h"
 #include "../headers/sqr.h"
-//#include "../cpp_scripts/sqr.cpp"
-//#include "../cpp_scripts/sine.cpp"
+#include "../headers/tri.h"
 #include <limits>
 #include <math.h>
 #ifndef M_PI
@@ -26,6 +25,6 @@ protected:
   float newfreq;
   float delta;
   Sine sinus;
-  //Zaag saw;
   Sqr square;
+  //Tri triangles;
 };
