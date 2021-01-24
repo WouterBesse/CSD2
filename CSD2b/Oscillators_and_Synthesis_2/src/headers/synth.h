@@ -1,6 +1,8 @@
 #include <iostream>
 #include "./oscillator.h"
 #include "./sine.h"
+#include "./square.h"
+#include "./triangle.h"
 
 class Synth {
 public:
@@ -11,7 +13,7 @@ public:
   float amp;
   float phase;
   double samplerate;
-  std::list<float> MelodyMaker();
+  std::vector<float> MelodyMaker();
 private:
   int osc1, osc2, osc3;
   Oscillator* wav1;

@@ -21,10 +21,11 @@ int main()
   float amp = 0.1;
   float freq = 0;
   float phase = 1;
-  Synth synthesizer(1, 2, 3, freq, amp, phase, samplerate);
+  Synth synthesizer(2, 2, 2, freq, amp, phase, samplerate);
   float sdelta = freq / samplerate;
   //float mel [7] = {195.997718, 0, 220, 0, 246.941651, 0, 195.997718};
-  std::list<float> mel = {195.997718, 0, 220, 0, 246.941651, 0, 195.997718};
+  //std::list<float> mel = {195.997718, 0, 220, 0, 246.941651, 0, 195.997718};
+  std::vector<float> mel{ 195.997718, 0, 220, 0, 246.941651, 0, 195.997718};
   int melnum = 0;
   int x = 0;
 
@@ -35,9 +36,10 @@ int main()
     for(unsigned int i = 0; i < nframes; i++) {
       x += 1;
       if (x % hs == 0) {
-        freq = std::next(mel.begin(), 1);;
-        //melnum ++;
-        //if(melnum > 6) melnum = 0;
+        //freq = std::next(mel.begin(), 1);
+        freq = mel.at(melnum);
+        melnum ++;
+        if(melnum > 6) melnum = 0;
       }
       outBuf[i] = synthesizer.getSVal(freq);
     }
@@ -67,7 +69,7 @@ int main()
         std::cout << "delta: " << sdelta << "\n";
         break;
       case 'm':
-        freq = 900;
+        mel = synthesizer.MelodyMaker();
     }
 
   }
