@@ -7,30 +7,30 @@ Synth::Synth(int osc1, int osc2, int osc3, float freq, float amp, float phase, f
   phase = phase;
   samplerate = samplerate;
   if (osc1 == 1) {
-    Sine wav1(float freq, float amp, float phase, float samplerate); // ik ben het er mee eens dat dit niet efficiënt is, maar kom er op het moment niet uit hoe ik losse osc instanties kan maken als het een member of child is
+    wav1 = new Sine(freq, amp, phase, samplerate); // ik ben het er mee eens dat dit niet efficiënt is, maar kom er op het moment niet uit hoe ik losse osc instanties kan maken als het een member of child is
   } else if (osc1 == 2) {
-    Sine wav1(float freq, float amp, float phase, float samplerate);
+    wav1 = new Sine(freq, amp, phase, samplerate);
     //Block fosc;
   } else {
-    Sine wav1(float freq, float amp, float phase, float samplerate);
+    wav1 = new Sine(freq, amp, phase, samplerate);
     //Triangle fosc;
   }
   if (osc2 == 1) {
-    Sine wav2(float freq, float amp, float phase, float samplerate);
+    wav2 = new Sine(freq, amp, phase, samplerate);
   } else if (osc2 == 2) {
-    Sine wav2(float freq, float amp, float phase, float samplerate);
+    wav2 = new Sine(freq, amp, phase, samplerate);
     //Block sosc;
   } else {
-    Sine wav2(float freq, float amp, float phase, float samplerate);
+    wav2 = new Sine(freq, amp, phase, samplerate);
     //Triangle sosc;
   }
   if (osc3 == 1) {
-    Sine wav3(float freq, float amp, float phase, float samplerate);
+    wav3 = new Sine(freq, amp, phase, samplerate);
   } else if (osc3 == 2) {
-    Sine wav3(float freq, float amp, float phase, float samplerate);
+    wav3 = new Sine(freq, amp, phase, samplerate);
     //Block fosc;
   } else {
-    Sine wav3(float freq, float amp, float phase, float samplerate);
+    wav3 = new Sine(freq, amp, phase, samplerate);
     //Triangle fosc;
   }
 }
@@ -39,6 +39,6 @@ Synth::~Synth() {
 }
 
 float Synth::getSVal() {
-  sBuf = wav1.getSamp();
+  sBuf = wav1->getSamp();
   return sBuf;
 }

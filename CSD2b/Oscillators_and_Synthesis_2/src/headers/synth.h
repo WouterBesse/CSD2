@@ -13,8 +13,8 @@ public:
   float samplerate;
 private:
   int osc1, osc2, osc3;
-  Oscillator wav1();
-  Oscillator wav2();
-  Oscillator wav3();
+  Oscillator* wav1;
+  Oscillator* wav2;
+  Oscillator* wav3;
   float sBuf;
 };
