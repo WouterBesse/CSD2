@@ -12,12 +12,15 @@ public:
   ~Oscillator();
   float BufOutput(float sample);
   float updatephase(float phase, float newfreq);
-  void calcfreq(float freq);
+  float calcfreq(float freq, double samplerate);
+  virtual float getSamp(float freq) {
+    return 0;
+  }
 protected:
   float freq;
   float amp;
   float phase;
-  float samplerate;
+  double samplerate;
   float sample;
   float freqoffset;
   float newfreq;

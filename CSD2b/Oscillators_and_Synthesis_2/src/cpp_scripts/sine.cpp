@@ -1,30 +1,21 @@
 #include <iostream>
 #include "../headers/sine.h"
 
-Sine::Sine(float freq, float amp, float phase, float samplerate){
-  freq = freq;
-  std::cout << freq;
-  std::cout << "\n";
-  amp = amp;
-  std::cout << amp;
-  std::cout << "\n";
-  phase = phase;
-  std::cout << phase;
-  std::cout << "\n";
-  samplerate = samplerate;
-  std::cout << samplerate;
-  std::cout << "\n";
-  Oscillator::calcfreq(freq);
-  std::cout << newfreq;
-  std::cout << "\n";
+Sine::Sine(float freq, float amp, float phase, double samplerate){
+  this->freq = freq;
+  this->amp = amp;
+  this->phase = phase;
+  this->samplerate = samplerate;
 }
 
 Sine::~Sine() {
 
 }
 
-float Sine::getSamp() {
+float Sine::getSamp(float freq) {
+  delta = calcfreq(freq, samplerate);
   tickvalue = amp * sin(phase * M_PI * 2.0f );
   phase += delta;
+  if(phase > 1.0) phase -= 1.0;
   return tickvalue;
 }

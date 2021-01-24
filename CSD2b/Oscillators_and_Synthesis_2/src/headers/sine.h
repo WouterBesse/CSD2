@@ -4,10 +4,9 @@
 class Sine : public Oscillator
 {
 public:
-  Sine(float freq, float amp, float phase, float samplerate);
+  Sine(float freq, float amp, float phase, double samplerate);
   ~Sine();
-  void update();
-  float getSamp();
+  float getSamp(float freq);
 private:
   float tickvalue;
 };

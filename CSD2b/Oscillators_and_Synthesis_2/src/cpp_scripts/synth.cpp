@@ -1,7 +1,8 @@
 #include <iostream>
+#include <list>
 #include "../headers/synth.h"
 
-Synth::Synth(int osc1, int osc2, int osc3, float freq, float amp, float phase, float samplerate) {
+Synth::Synth(int osc1, int osc2, int osc3, float freq, float amp, float phase, double samplerate) {
   freq = freq;
   amp = amp;
   phase = phase;
@@ -38,7 +39,16 @@ Synth::Synth(int osc1, int osc2, int osc3, float freq, float amp, float phase, f
 Synth::~Synth() {
 }
 
-float Synth::getSVal() {
-  sBuf = wav1->getSamp();
-  return sBuf;
+float Synth::getSVal(float freq) {
+  sBuf = wav1->getSamp(freq) + wav2->getSamp(freq) + wav3->getSamp(freq);
+  sBufdiv = sBuf / 3;
+  return sBufdiv;
+}
+
+std::list<float> Synth::MelodyMaker() {
+  std::list<float> NewMel = {};
+  for(unsigned int i = 0; i < 6; i++) {
+    NewMel.push_back (500 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(5000 - 500))));
+  };
+  return NewMel;
 }
