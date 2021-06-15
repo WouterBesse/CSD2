@@ -14,4 +14,9 @@ To learn more about this program, you can find its readme in `CSD2a/single_sampl
 ### Sample Sequencer v2 `CSD2a/eindopdracht`
 A continuation of the first sample sequencer, also the final project of the first semester of CSD.<br>
 A sequencer that can play a melody, drum sequencer and in the future maybe more at the same time.<br>
-Completely rewritten the note and drum player to work on the same thread, to avoid the midi saving bug.
+Completely rewritten the note and drum player to work on the same thread, to avoid the midi saving bug.<br>
+
+### Playful Synth `CSD2d/Playful Synth`
+The final project for the 4th semester of CSD, this contains both the Playful Music app project and the audio visualiser<br>
+This is a fun synthesizer you can play with in your browser and sculpt cool sound for.<br>
+It's designed to engage the user and let you explore sound.

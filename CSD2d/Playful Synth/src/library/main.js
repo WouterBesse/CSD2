@@ -421,7 +421,6 @@ function onMouseMove(event) {
 
     // Moves the texture of the triangle according to the y coordinate of the mouse
   } else if (slideTri == 1) {
-    console.log('kaas');
       var mouseDistY = mouse.y - heldMouse.y;
       scene.getObjectByName('slideTriangle').material.map.offset.y += mouseDistY;
       scene.getObjectByName('slideTriangle').material.map.offset.y = Math.min(Math.max(scene.getObjectByName('slideTriangle').material.map.offset.y, 0), 0.5);
