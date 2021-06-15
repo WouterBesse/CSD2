@@ -92,7 +92,7 @@ int main()
         break;
       case 'h':
         std::cout << "Hello, you can type a key to execute it's funtion, the following keys are possible: \n";
-        std::cout << "m - See synthesizer values \n";
+        std::cout << "p - See synthesizer values \n";
         std::cout << "m - Generate new melody \n";
         std::cout << "r - Set synthesizer to ring modulation \n";
         std::cout << "a - Set synthesizer to adding the waves \n";
